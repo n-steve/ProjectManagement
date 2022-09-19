@@ -17,12 +17,14 @@ ActiveRecord::Schema.define(version: 2022_09_17_224832) do
 
   create_table "apps", force: :cascade do |t|
     t.string "app_name"
+    t.string "app_details"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
     t.integer "ticket_id"
     t.string "comment_chat"
     t.datetime "created_at", precision: 6, null: false
@@ -32,11 +34,10 @@ ActiveRecord::Schema.define(version: 2022_09_17_224832) do
   create_table "tickets", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.string "type"
+    t.string "issue"
     t.string "status"
     t.string "priority"
-    t.integer "user_id"
-    t.integer "apps_id"
+    t.integer "app_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -45,7 +46,6 @@ ActiveRecord::Schema.define(version: 2022_09_17_224832) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
