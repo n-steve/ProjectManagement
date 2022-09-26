@@ -43,3 +43,10 @@ Ticket's comments between users
 4 Models/Migration created -- incomplete, still adjusting and editing.
 
 create sample seed DataBase to double check migration foreign keys, and association.
+
+Serialization success
+Routes Success
+
+Begin Frontend Work
+
+-issues with Invalid Hook Call?
