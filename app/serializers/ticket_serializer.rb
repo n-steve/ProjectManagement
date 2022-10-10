@@ -1,7 +1,7 @@
 class TicketSerializer < ActiveModel::Serializer
-  attributes :title, :description, :issue, :status, :priority
+  attributes :id,:title, :description, :issue, :status, :priority,:app_id
 
-has_one :app
+belongs_to :app
 has_many :comments
 
 end

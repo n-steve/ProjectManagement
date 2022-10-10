@@ -1,10 +1,24 @@
 Rails.application.routes.draw do
 
 
+
 resources :users
 resources :apps
 resources :tickets
 resources :comments
+
+
+post '/tickets/:app_id/app', to: "tickets#create"
+post '/apps', to: "apps#create"
+get '/users/:user_id', to: "users#show"
+
+
+get '/tickets/:app_id/app/:id', to: "tickets#show"
+
+delete '/users/apps/:id', to: "apps#destroy"
+delete '/tickets/:id',to:  "tickets#destroy"
+
+
 
 post '/signup', to: 'users#create'
 

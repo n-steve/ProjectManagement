@@ -1,6 +1,6 @@
 class AppSerializer < ActiveModel::Serializer
-  attributes :app_name,:app_details
+  attributes :app_name,:app_details,:id
 
-has_one :user
+belongs_to :user
 has_many :tickets
 end
