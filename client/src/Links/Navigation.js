@@ -48,11 +48,6 @@ function Navigation() {
             />
             <Tab label="Projects" value={3} to="/projects" component={Link} />
             <Tab label="LogOut" onClick={logOut} />
-            <Button style={{ color: "black" }}>Account</Button>
-            <Menu>
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Project</MenuItem>
-            </Menu>
           </Tabs>
         </Box>
       </nav>

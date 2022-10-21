@@ -30,7 +30,7 @@ function Projects() {
     setUser(update);
   }
   console.log(user);
-  const displayData = user.map((i, index) =>
+  const displayData = user?.map((i, index) =>
     i.apps?.map((x) => (
       <ProjectContainer
         key={`${x.id}-${uuidv4}`}

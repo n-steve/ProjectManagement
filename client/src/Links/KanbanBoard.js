@@ -90,34 +90,43 @@ function KanBanBoard() {
                           minHeight: 500,
                         }}
                       >
-                        {column.items.map((item, index) => {
-                          return (
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id}
-                              index={index}
-                            >
-                              {(provided) => (
-                                <div
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  ref={provided.innerRef}
-                                  style={{
-                                    userSelect: "none",
-                                    padding: 16,
-                                    margin: "0 0 8px 0",
-                                    minHeight: "50px",
-                                    backgroundColor: "grey",
-                                    color: "white",
-                                    ...provided.draggableProps.style,
-                                  }}
-                                >
-                                  {console.log(item.content)}
-                                </div>
-                              )}
-                            </Draggable>
-                          );
-                        })}
+                        {column.items?.map((item) =>
+                          item?.map((i, index) => {
+                            return (
+                              <Draggable
+                                key={i.id}
+                                draggableId={i.id}
+                                index={index}
+                              >
+                                {(provided) => (
+                                  <div
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    ref={provided.innerRef}
+                                    style={{
+                                      userSelect: "none",
+                                      padding: 16,
+                                      margin: "0 0 8px 0",
+                                      minHeight: "50px",
+                                      backgroundColor: "grey",
+                                      color: "white",
+                                      ...provided.draggableProps.style,
+                                    }}
+                                  >
+                                    {i.content.map((x) =>
+                                      x.map((y) => (
+                                        <div key={y.first_name}>
+                                          {y.first_name}
+                                          {y.last_name}
+                                        </div>
+                                      ))
+                                    )}
+                                  </div>
+                                )}
+                              </Draggable>
+                            );
+                          })
+                        )}
                         {provided.placeholder}
                       </div>
                     );
