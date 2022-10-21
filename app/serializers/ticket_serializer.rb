@@ -4,4 +4,5 @@ class TicketSerializer < ActiveModel::Serializer
 belongs_to :app
 has_many :comments
 
+
 end

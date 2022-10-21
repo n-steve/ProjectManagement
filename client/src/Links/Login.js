@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import LoginForm from "../Forms/LoginForm";
 import Registration from "../Forms/Registration";
-
+import { Box } from "@mui/material";
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
-    <>
+    <Box>
       <h1>Hello</h1>
       {showLogin ? (
         <>
@@ -25,7 +25,7 @@ function Login({ onLogin }) {
           </p>
         </>
       )}
-    </>
+    </Box>
   );
 }
 export default Login;

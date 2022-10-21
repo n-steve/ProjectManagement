@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
-    # skip_before_action :authorization_status, only: :create
-
+    # before_action :authorize, only: :create
 
 def index
     user = User.all
-    render json: user, include: ["apps.tickets.comments"]
+    render json: user
+end
+
+def show
+   user ||= User.find_by(id: session[:user_id])
+    render json: user, include: "apps.tickets.comments"
 end
 
 def create
@@ -18,14 +22,8 @@ def create
 end 
 
 
-def show 
-    user = User.find_by(id: session[:user_id])
-    if user
-        render json: user, include: ["apps.tickets.comments","tickets"]
-    else
-        render json: {error: "Not Authorized"}, status: :unauthorized
-    end
-end
+
+
 
 # def update 
 #     user ||= User.find_by(:id session[:user_id]
@@ -45,9 +43,15 @@ end
 
     
 private
+
+# def find_user
+# User.find_by(id: params[:id])
+# end
+
     def user_params
-        params.permit(:first_name,:last_name,:email,:password,:password_confirmation)
+        params.permit(:id,:first_name,:last_name,:email,:password,:password_confirmation)
     end
 
+ 
     
 end

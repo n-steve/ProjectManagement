@@ -1,11 +1,12 @@
 class CreateApps < ActiveRecord::Migration[6.1]
   def change
     create_table :apps do |t|
-      t.string :app_name
-      t.string :app_details
-      t.integer :user_id
+      t.string :app_name,null: false
+      t.string :app_details, null: false
+      t.integer :user_id, foreign_key: true
+      t.datetime :create
+      t.timestamps 
     
-      t.timestamps
     end
   end
 end

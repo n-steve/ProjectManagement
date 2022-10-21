@@ -46,7 +46,7 @@ function Edit({ id, setHidden, handleUpdateApp, deleteApp }) {
         <IconButton onClick={handleUpdate} endIcon>
           Update
         </IconButton>
-        <IconButton onClick={deleteApp} endIcon>
+        <IconButton onClick={() => deleteApp(id)} endIcon>
           Delete
         </IconButton>
       </TableCell>

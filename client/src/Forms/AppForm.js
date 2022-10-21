@@ -29,13 +29,13 @@ function AppForm({ handleAppAdd }) {
     })
       .then((r) => r.json())
       .then((data) => {
-        return handleAppAdd(data);
+        handleAppAdd(data);
       });
   }
 
   return (
     <>
-      <form>
+      <form onSubmit={handleAppSubmit}>
         <h3>Create Application</h3>
         <Table>
           <TableBody>
@@ -57,7 +57,7 @@ function AppForm({ handleAppAdd }) {
                 ></TextField>
               </TableCell>
               <TableCell>
-                <Button onClick={handleAppSubmit}>Submit</Button>
+                <Button type="submit">Submit</Button>
               </TableCell>
             </TableRow>
           </TableBody>

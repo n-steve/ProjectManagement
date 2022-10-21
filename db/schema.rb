@@ -16,36 +16,39 @@ ActiveRecord::Schema.define(version: 2022_09_17_224832) do
   enable_extension "plpgsql"
 
   create_table "apps", force: :cascade do |t|
-    t.string "app_name"
-    t.string "app_details"
+    t.string "app_name", null: false
+    t.string "app_details", null: false
     t.integer "user_id"
+    t.datetime "create"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "ticket_id"
-    t.string "comment_chat"
+    t.integer "user_id", null: false
+    t.integer "ticket_id", null: false
+    t.string "comment_chat", null: false
+    t.datetime "create"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tickets", force: :cascade do |t|
-    t.string "title"
-    t.string "description"
-    t.string "issue"
-    t.string "status"
-    t.string "priority"
+    t.string "title", null: false
+    t.string "description", null: false
+    t.string "issue", null: false
+    t.string "status", null: false
+    t.string "priority", null: false
     t.integer "app_id"
+    t.datetime "create"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import AppForm from "../Forms/AppForm";
+import { FetchContext } from "./FetchContext";
+import { v4 as uuidv4 } from "uuid";
 import {
   Table,
   TableBody,
@@ -10,77 +12,73 @@ import {
   Paper,
 } from "@mui/material";
 import ProjectContainer from "../Links/ProjectContainer";
-function Projects({ user }) {
-  const [getData, setGetData] = useState([]);
-  const [getApp, setGetApp] = useState([]);
-  const [getTicket, setGetTicket] = useState([]);
-  // const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`/users/:user_id`)
-      .then((r) => r.json())
-      .then((data) => {
-        setGetApp(data.apps);
-        setGetTicket(data.tickets);
-        setGetData(data);
-      });
-  }, []);
-
-  const handleTickets = (newTicket) => {
-    setGetTicket([...getTicket, newTicket]);
-  };
+// import ProjectList from "./ProjectList";
+function Projects() {
+  const { user, setUser } = useContext(FetchContext);
 
   const handleAppAdd = (newApp) => {
-    const applicationsInfo = getData.apps;
-    setGetData([...applicationsInfo, newApp]);
+    setUser([...user, newApp]);
   };
+
   const handleAppDelete = (deleteApp) => {
-    const applicationInfo = getData.apps;
-    const updateApp = applicationInfo.filter((i) => i.id !== deleteApp.id);
-    setGetData(updateApp);
+    const updateApp = user?.filter((i) => i.id !== deleteApp.id);
+    setUser(updateApp);
   };
 
-  const handleUpdateApp = (updateApp) => {
-    const update = getData.apps.map((i) =>
-      i.id === updateApp.id ? updateApp : i
-    );
-    setGetData(update);
-  };
-
-  const displayData = getData.apps?.map((i) => {
-    console.log(i);
-    return (
+  function handleUpdateApp(updateApp) {
+    const update = user?.map((i) => (i.id === updateApp.id ? updateApp : i));
+    setUser(update);
+  }
+  console.log(user);
+  const displayData = user.map((i, index) =>
+    i.apps?.map((x) => (
       <ProjectContainer
-        key={i.id}
-        id={i.id}
-        appname={i.app_name}
-        appdetails={i.app_details}
-        tickets={i.tickets}
-        handleAppDelete={handleAppDelete}
-        handleTickets={handleTickets}
-        handleAppAdd={handleAppAdd}
+        key={`${x.id}-${uuidv4}`}
+        data={i.apps}
+        id={x.id}
+        appName={x.app_name}
+        appDetails={x.app_details}
+        tickets={x.tickets}
         handleUpdateApp={handleUpdateApp}
+        handleAppDelete={handleAppDelete}
+        handleAppAdd={handleAppAdd}
+        index={index}
       />
-    );
-  });
+    ))
+  );
+  console.log(user);
 
   return (
-    <>
+    <div>
       <h1 style={{ position: "static", textAlign: "center" }}>Projects!</h1>
-      <AppForm getData={getData} handleAppAdd={handleAppAdd} />
+      <AppForm handleAppAdd={handleAppAdd} />
+
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow>
-              <TableCell align="left">App Name: </TableCell>
-              <TableCell align="left">App Details</TableCell>
+            <TableRow styles={{ backgroundColor: "lightblue" }}>
+              <TableCell style={{ fontWeight: "bold" }} align="left">
+                <h3>Project Name: Project Details: </h3>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{displayData}</TableBody>
         </Table>
       </TableContainer>
-    </>
+    </div>
   );
 }
 
 export default Projects;
+// {user.map((i, index) => (
+//   <ProjectContainer
+//     key={`${i.id}-${index}-${uuidv4}`}
+//     id={i.id}
+//     appName={i.app_name}
+//     appDetails={i.app_details}
+//     handleUpdateApp={handleUpdateApp}
+//     handleAppDelete={handleAppDelete}
+//     data={i}
+//     index={index}
+//   />
+// ))}

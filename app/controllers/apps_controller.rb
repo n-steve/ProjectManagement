@@ -1,62 +1,44 @@
 class AppsController < ApplicationController
     # after_action :authorization_status
-
+    # skip_before_action :authorize, only: :create
 def index
-    app = App.all
-    render json: app
+    apps = App.all
+    render json: apps
 end
 
 def show
-    user ||= User.find_by(id: session[:user_id])
-    if user
-        app = App.find_by(id: params[:id])
-        render json: app, include: ["tickets"]
-    else
-        render json: {error: ["Not found"]}, status: :not_found
-    end
+user ||= User.find_by(id: params[:user_id])
+if user
+    apps = user.apps.find_by(params[:id])
+    render json: apps
+end
 end
 
-def create 
-    user ||= User.find_by(id: session[:user_id])
-    if user
-        app = user.apps.create!(app_params)
-        render json: app, status: :created
-    else
-        render json: {error: "Not Authorized"}, status: :unauthorized
-    end
-end
 
-def destroy
- user = User.find_by(id: session[:user_id])
+def create
+ user = User.find_by(params[:id])
  if user
-    app = user.apps.find_by(id: params[:id])
-    if app
-    app.destroy
-      head :no_content
-    else
-        render json: {error: "No Data"}, status: :not_found
-    end
+    app = user.apps.find_by(params[:id])
+    app = user.apps.create!(app_params)
+    render json: app 
 end
 end
-
-def update
-    user ||= User.find_by(id: session[:user_id])
-    if user
-        app = user.apps.find_by(id: params[:id])
-        if app
-            app.update(app_params)
-            render json: app, status: :created
-        else
-            render json: {error: "not found"}, status: :not_found
-        end
-    end
-end
-
 
 private
 
+def find_app
+     App.find_by(id: params[:id])
+end
+
 def app_params
-    params.permit(:app_name,:app_details,:tickets)
+    params.permit(:id,:app_name,:app_details)
 end
 
 end
+# {
+#     "title": "title",
+#     "description": "title",
+#     "issue": "TypeError",
+#     "status": "Open",
+#     "priority": "Low"
+# }
