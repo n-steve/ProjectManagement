@@ -5,7 +5,7 @@ resources :tickets
 resources :comments
 
 
-
+delete '/apps/:id', to: "apps#destroy"
 
 
 post '/signup', to: 'users#create'

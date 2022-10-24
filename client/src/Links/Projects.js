@@ -29,7 +29,6 @@ function Projects() {
     const update = user?.map((i) => (i.id === updateApp.id ? updateApp : i));
     setUser(update);
   }
-  console.log(user);
   const displayData = user?.map((i, index) =>
     i.apps?.map((x) => (
       <ProjectContainer
@@ -46,8 +45,6 @@ function Projects() {
       />
     ))
   );
-  console.log(user);
-
   return (
     <div>
       <h1 style={{ position: "static", textAlign: "center" }}>Projects!</h1>

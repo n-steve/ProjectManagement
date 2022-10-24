@@ -34,6 +34,7 @@ function ProjectContainer(props) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
+  console.log(id);
   const deleteApp = () => {
     fetch(`/apps/${id}`, { method: "DELETE" }).then((data) =>
       handleAppDelete(data)
@@ -41,40 +42,9 @@ function ProjectContainer(props) {
   };
   const [appId, setAppId] = useState(id);
 
-  // const handleChange = (newData) => {
-  //   Object.entries(x).map((i) => {
-  //     const filterData = i.filter((f, index) => {
-  //       if ((newData = f));
-  //       console.log(f.id, newData.id, f, index);
-  //       return f;
-  //     });
-  //     setX(filterData);
-  //   });
-  // };
-
   const handleChange = (newTicket) => {
     setUser([...user, newTicket]);
   };
-
-  // const handleChange = (ticketData) => {
-  //   const mapData = x.filter((i) => i.id === ticketData.app_id);
-
-  // console.log(mapData, ticketData.app_id, x);
-
-  // console.log(x.filter((i) => i.id));
-  // console.log(
-  //   x.map((i) => {
-  //     console.log(i, index);
-  //     if (i.id === i.id) return x;
-  //   })
-  // );
-  // const handleChange = (newData) => {
-  //   const mapData = x.map((i) => {
-  //     if (i.id) return x;
-  //   });
-
-  //   console.log("click: ", mapData, newData);
-  // };
 
   return (
     <React.Fragment>
@@ -115,7 +85,7 @@ function ProjectContainer(props) {
                   />
                 )}
               </IconButton>
-              <IconButton onClick={() => deleteApp(id)}>
+              <IconButton onClick={(id) => deleteApp(id)}>
                 <Delete />
               </IconButton>
             </TableCell>
@@ -133,13 +103,11 @@ function ProjectContainer(props) {
                 gutterBottom
                 component="div"
                 align="left"
-              >
-                Ticket
-              </Typography>
+              ></Typography>
               <Table size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell></TableCell>
+                    <TableCell>Ticket#</TableCell>
                     <TableCell>Title</TableCell>
                     <TableCell>Description</TableCell>
                     <TableCell align="right">Issue</TableCell>
@@ -163,25 +131,13 @@ function ProjectContainer(props) {
                         />
                       )}
                     </TableCell>
-                    {/* <TableCell>
-                      {!openTicket ? null : (
-                        <TicketForm
-                          setOpenTicket={setOpenTicket}
-                          data={data}
-                          id={id}
-                        />
-                      )}
-                    </TableCell> */}
                   </TableRow>
                 </TableHead>
 
                 {tickets?.map((x, index) => (
                   <TableBody key={`${x.id}-${index}-${uuidv4}`}>
                     <TableRow>
-                      <TableCell>
-                        {x.id}
-                        {x.app_id}
-                      </TableCell>
+                      <TableCell>{x.id}</TableCell>
                       <TableCell aling="right">{x.title}</TableCell>
                       <TableCell aling="right">{x.description}</TableCell>
                       <TableCell align="right">{x.issue}</TableCell>

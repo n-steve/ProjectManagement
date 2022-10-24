@@ -7,7 +7,7 @@ def index
 end
 
 def show
-user ||= User.find_by(id: params[:user_id])
+user ||= User.find_by(params[:user_id])
 if user
     apps = user.apps.find_by(params[:id])
     render json: apps
@@ -16,14 +16,26 @@ end
 
 
 def create
- user = User.find_by(params[:id])
+ user ||= User.find_by(id: session[:user_id])
  if user
-    app = user.apps.find_by(params[:id])
     app = user.apps.create!(app_params)
+#     app = user.apps.find_by(params[:id])
+#     app = user.apps.create!(app_params)
     render json: app 
 end
 end
 
+def destroy
+    user ||= User.find_by(id: session[:user_id])
+    if user
+        app = App.find_by(id: params[:id])
+        # App.all.find_by(id: params[:id]).destroy
+app.destroy
+          head :no_content
+        else
+            render json: {error: "No Data"}, status: :not_found
+        end
+    end
 private
 
 def find_app
