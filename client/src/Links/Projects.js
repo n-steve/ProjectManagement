@@ -12,12 +12,12 @@ import {
   Paper,
 } from "@mui/material";
 import ProjectContainer from "../Links/ProjectContainer";
-// import ProjectList from "./ProjectList";
 function Projects() {
   const { user, setUser } = useContext(FetchContext);
-
+  console.log(user);
   const handleAppAdd = (newApp) => {
-    setUser([...user, newApp]);
+    const userDAta = user.apps;
+    setUser([...userDAta, newApp]);
   };
 
   const handleAppDelete = (deleteApp) => {
@@ -29,22 +29,8 @@ function Projects() {
     const update = user?.map((i) => (i.id === updateApp.id ? updateApp : i));
     setUser(update);
   }
-  const displayData = user?.map((i, index) =>
-    i.apps?.map((x) => (
-      <ProjectContainer
-        key={`${x.id}-${uuidv4}`}
-        data={i.apps}
-        id={x.id}
-        appName={x.app_name}
-        appDetails={x.app_details}
-        tickets={x.tickets}
-        handleUpdateApp={handleUpdateApp}
-        handleAppDelete={handleAppDelete}
-        handleAppAdd={handleAppAdd}
-        index={index}
-      />
-    ))
-  );
+  console.log(user);
+
   return (
     <div>
       <h1 style={{ position: "static", textAlign: "center" }}>Projects!</h1>
@@ -59,7 +45,24 @@ function Projects() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{displayData}</TableBody>
+          <TableBody>
+            {user?.map((i, index) =>
+              i.apps?.map((x) => (
+                <ProjectContainer
+                  key={`${x.id}-${uuidv4}`}
+                  data={i.apps}
+                  id={x.id}
+                  appName={x.app_name}
+                  appDetails={x.app_details}
+                  tickets={x.tickets}
+                  handleUpdateApp={handleUpdateApp}
+                  handleAppDelete={handleAppDelete}
+                  handleAppAdd={handleAppAdd}
+                  index={index}
+                />
+              ))
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>

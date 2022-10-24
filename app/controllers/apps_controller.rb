@@ -19,8 +19,7 @@ def create
  user ||= User.find_by(id: session[:user_id])
  if user
     app = user.apps.create!(app_params)
-#     app = user.apps.find_by(params[:id])
-#     app = user.apps.create!(app_params)
+
     render json: app 
 end
 end
@@ -32,6 +31,7 @@ def destroy
         # App.all.find_by(id: params[:id]).destroy
 app.destroy
           head :no_content
+          render json: app
         else
             render json: {error: "No Data"}, status: :not_found
         end
@@ -47,10 +47,3 @@ def app_params
 end
 
 end
-# {
-#     "title": "title",
-#     "description": "title",
-#     "issue": "TypeError",
-#     "status": "Open",
-#     "priority": "Low"
-# }

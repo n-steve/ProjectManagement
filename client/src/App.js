@@ -8,7 +8,7 @@ import Projects from "./Links/Projects";
 import { FetchContext } from "./Links/FetchContext";
 import { Box } from "@mui/material";
 function App() {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetch("/me")
@@ -16,21 +16,30 @@ function App() {
       .then((user) => {
         setUser([user]);
       });
-    // const timer = setInterval(() => {
-    //   fetch("/me")
-    //     .then((r) => r.json())
-    //     .then((user) => setUser(user));
-    // }, 5000);
+    const timer = setInterval(() => {
+      fetch("/me")
+        .then((r) => r.json())
+        .then((user) => setUser(user));
+    }, 5000);
 
-    // return () => {
-    //   clearInterval(timer);
-    // };
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
+
+  // useEffect(() => {
+  //   const timerId = setInterval(() => {
+  //     fetch("/me")
+  //       .then((r) => r.json())
+  //       .then((data) => setUser(data));
+  //   }, 3000);
+  //   return () => clearInterval(timerId);
+  // }, [timerId]);
 
   if (!user) return <Login onLogin={setUser} />;
 
   return (
-    <FetchContext.Provider value={{ user, setUser }}>
+    <FetchContext.Provider value={(user, setUser)}>
       <Box style={{ background: "lightblue" }}>
         <Navigation />
         <Routes>
